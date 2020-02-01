@@ -68,9 +68,16 @@ def build_extension_from_pyx(pyx_path, extra_sources_paths=None):
     include_dirs = [NUMPY_INC_PATH]
     library_dirs = []
     if IS_WIN:
-        include_dirs.append(os.environ['LIBRARY_INC'])
-        library_dirs.append(os.environ['LIBRARY_BIN'])
-
+        try:
+            include_dirs.append(os.environ['LIBRARY_INC'])
+        except:
+            include_dirs = []
+        
+        try:
+            library_dirs.append(os.environ['LIBRARY_BIN'])
+        except:
+            library_dirs = []
+            
     if extra_sources_paths is None:
         extra_sources_paths = []
     extra_sources_paths.insert(0, pyx_path)
